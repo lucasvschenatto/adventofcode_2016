@@ -3,15 +3,18 @@ var keyboard = [
   [1,2,3],
   [4,5,6],
   [7,8,9]
+  // [undefined,undefined,1        ,undefined,undefined],
+  // [undefined,2        ,3        ,4        ,undefined],
+  // [5        ,6        ,7        ,8        ,9],
+  // [undefined,'A'      ,'B'      ,'C'      ,undefined],
+  // [undefined,undefined,'D'      ,undefined,undefined]
 ];
 var result = [];
 var up = function(current){
-  var result = current - 3;
-  return result>0 ? result : current;
+  return (current > 3 )? current - 3 : current;
 }
 var down = function(current){
-  var result = current + 3;
-  return result<10 ? result : current;
+  return (current < 7 )? current + 3 : current;
 }
 var left = function(current){
   return (current !== 1 && current !== 4 & current !== 7 )? current - 1 : current;
@@ -31,8 +34,22 @@ var doInstruction = function(instruction,current){
       return right(current);
   }
 }
+var findPosition = function (key){
+  var lineIndex;
+  var keyIndex;
+  keyboard.forEach(function(line,lIndex){
+    line.forEach(function(currentKey,kIndex){
+      if(key === currentKey){
+        lineIndex = lIndex;
+        keyIndex  = kIndex;
+      }
+    });
+  });
+  return [lineIndex,keyIndex];
+};
 var readLine = function readLine(line){
-  var current = result[result.length - 1] || 5;
+  var pos = findPosition(result[result.length - 1] || 5);
+  var current = keyboard[pos[0]][pos[1]];
   line.split('').forEach(function(instruction){
       current = doInstruction(instruction,current);
   });
