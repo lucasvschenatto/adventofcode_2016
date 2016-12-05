@@ -45,40 +45,41 @@ var turn = function(c){
       break;
   }
 }
+var firstRepeated;
 var walk = function(steps){
   var s = parseInt(steps);
-  switch (state) {
-    case 'N':
-      x += s;
-      break;
-    case 'E':
-      y += s;
-      break;
-    case 'S':
-      x -= s;
-      break;
-    case 'W':
-      y -= s;
-      break;
+  for (var i = 0; i < s; i++) {
+    switch (state) {
+      case 'N':
+        x++;
+        break;
+      case 'E':
+        y++;
+        break;
+      case 'S':
+        x--;
+        break;
+      case 'W':
+        y--;
+        break;
+    }
+    if(!firstRepeated){
+      firstRepeated = history.find(function(current){
+        return current[0] === x && current[1] === y;
+      });
+      if(firstRepeated)
+        console.log(firstRepeated);
+    }
+    // firstRepeated = history.find(function(current){
+    //   return current[0] === x && current[1] === y;
+    // });
+    // console.log(firstRepeated);
+    history.push([x,y]);
   }
-
-
 }
-var filterNumber = function(s){
-  return parseInt(s);
-}
-var firstRepeated;
 commands.forEach(function(command){
   turn(command[0]);
-  var steps = filterNumber(command.slice(1));
+  var steps = parseInt(command.slice(1));
   walk(steps);
-  history.push([x,y]);
-  if(!firstRepeated){
-    firstRepeated = history.find(function(current){
-      return current[0] === x && current[1] === y;
-    });
-    if(firstRepeated)
-      console.log(firstRepeated);
-  }
 });
 console.log(Math.abs(x)+Math.abs(y));
