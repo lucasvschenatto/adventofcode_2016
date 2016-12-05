@@ -1,13 +1,10 @@
 var commands = process.argv.slice(2);
 var keyboard = [
-  [1,2,3],
-  [4,5,6],
-  [7,8,9]
-  // [undefined,undefined,1        ,undefined,undefined],
-  // [undefined,2        ,3        ,4        ,undefined],
-  // [5        ,6        ,7        ,8        ,9],
-  // [undefined,'A'      ,'B'      ,'C'      ,undefined],
-  // [undefined,undefined,'D'      ,undefined,undefined]
+  [undefined,undefined,1        ,undefined,undefined],
+  [undefined,2        ,3        ,4        ,undefined],
+  [5        ,6        ,7        ,8        ,9],
+  [undefined,'A'      ,'B'      ,'C'      ,undefined],
+  [undefined,undefined,'D'      ,undefined,undefined]
 ];
 var result = [];
 var up = function(current){
