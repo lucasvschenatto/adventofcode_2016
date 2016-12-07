@@ -1,23 +1,30 @@
 var commands = process.argv.slice(2);
 var keyboard = [
-  [undefined,undefined,    1    ,undefined,undefined],
-  [undefined,    2    ,    3    ,    4    ,undefined],
-  [    5    ,    6    ,    7    ,    8    ,    9    ],
-  [undefined,   'A'   ,   'B'   ,   'C'   ,undefined],
-  [undefined,undefined,   'D'   ,undefined,undefined]
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+  // [undefined,undefined,    1    ,undefined,undefined],
+  // [undefined,    2    ,    3    ,    4    ,undefined],
+  // [    5    ,    6    ,    7    ,    8    ,    9    ],
+  // [undefined,   'A'   ,   'B'   ,   'C'   ,undefined],
+  // [undefined,undefined,   'D'   ,undefined,undefined]
 ];
 var result = [];
 var up = function(current){
-  return (current > 3 )? current - 3 : current;
+  current[0] = current[0] > 0 ? current[0] - 1 : current[0];
+  return current;
 }
 var down = function(current){
-  return (current < 7 )? current + 3 : current;
+  current[0] = current[0] < 2 ? current[0] + 1 : current[0];
+  return current;
 }
 var left = function(current){
-  return (current !== 1 && current !== 4 & current !== 7 )? current - 1 : current;
+  current[1] = current[1] > 0 ? current[1] - 1 : current[1];
+  return current;
 }
 var right = function(current){
-  return (current !== 3 && current !== 6 & current !== 9 )? current + 1 : current;
+  current[1] = current[1] < 2 ? current[1] + 1 : current[1];
+  return current;
 }
 var doInstruction = function(instruction,current){
   switch (instruction) {
@@ -45,15 +52,16 @@ var findPosition = function (key){
   return [lineIndex,keyIndex];
 };
 var readLine = function readLine(line){
-  var pos = findPosition(result[result.length - 1] || 5);
-  var current = keyboard[pos[0]][pos[1]];
+  var current = result[result.length - 1] || [1,1];
   line.split('').forEach(function(instruction){
-      current = doInstruction(instruction,current);
+      current = doInstruction(instruction,current.slice());
   });
   return current;
 };
 commands.forEach(function(line){
   result.push(readLine(line));
 });
+var convertedResult = [];
+result.forEach(function(c){convertedResult.push(keyboard[c[0]][c[1]])} );
 
-console.log(result);
+console.log(convertedResult);
