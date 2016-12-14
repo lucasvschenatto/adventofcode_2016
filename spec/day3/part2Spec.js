@@ -1,53 +1,67 @@
-describe("columnCounter", function() {
-  var counter = require('../../lib/day3/columnCounter');
-
-  // it("should count all triangles",()=>{
-  //   var count = counter([3,4,5],[9,9,9],[6,8,10]);
-  //   expect(count).toEqual(3);
-  // });
-  // it("should count only triangles",()=>{
-  //   var count = counter([3,4,5],[9,9,9],[10,10,25]);
-  //   expect(count).toEqual(2);
+var threeTriangles = [
+  [3 ,4 ,5 ],
+  [9 ,11,12],
+  [6 ,8 ,10]
+];
+var nineTriangles = [
+  [1 ,2 ,3 ],
+  [4 ,5 ,6 ],
+  [7 ,8 ,9 ],
+  [10,11,12],
+  [13,14,15],
+  [16,17,18],
+  [19,20,21],
+  [22,23,24],
+  [25,26,27]
+];
+var exampleInput = [
+  [101, 301, 501],
+  [102, 302, 502],
+  [103, 303, 503],
+  [201, 401, 601],
+  [202, 402, 602],
+  [203, 403, 603]
+];
+describe("columnConverter", ()=>{
+  var convert = require('../../lib/day3/columnConverter');
+  it("should return a triangle from the first element of the three first arguments",()=>{
+    var converted = convert(...threeTriangles);
+    expect(converted[0]).toEqual([3,9,6]);
   });
-  //
-  // describe("when song has been paused", function() {
-  //   beforeEach(function() {
-  //     player.play(song);
-  //     player.pause();
-  //   });
-  //
-  //   it("should indicate that the song is currently paused", function() {
-  //     expect(player.isPlaying).toBeFalsy();
-  //
-  //     // demonstrates use of 'not' with a custom matcher
-  //     expect(player).not.toBePlaying(song);
-  //   });
-  //
-  //   it("should be possible to resume", function() {
-  //     player.resume();
-  //     expect(player.isPlaying).toBeTruthy();
-  //     expect(player.currentlyPlayingSong).toEqual(song);
-  //   });
-  // });
-  //
-  // // demonstrates use of spies to intercept and test method calls
-  // it("tells the current song if the user has made it a favorite", function() {
-  //   spyOn(song, 'persistFavoriteStatus');
-  //
-  //   player.play(song);
-  //   player.makeFavorite();
-  //
-  //   expect(song.persistFavoriteStatus).toHaveBeenCalledWith(true);
-  // });
-  //
-  // //demonstrates use of expected exceptions
-  // describe("#resume", function() {
-  //   it("should throw an exception if song is already playing", function() {
-  //     player.play(song);
-  //
-  //     expect(function() {
-  //       player.resume();
-  //     }).toThrowError("song is already playing");
-  //   });
-  // });
+  it("should also return a triangle from the second element of the three first arguments",()=>{
+    var converted = convert(...threeTriangles);
+    expect(converted[1]).toEqual([4,11,8]);
+  });
+  it("should also return a triangle from the third element of the three first arguments",()=>{
+    var converted = convert(...threeTriangles);
+    expect(converted[2]).toEqual([5,12,10]);
+  });
+  it("should convert the remaining lines with same rule",()=>{
+    var converted = convert(...nineTriangles);
+    expect(converted[0]).toEqual([1 ,4 ,7 ]);
+    expect(converted[1]).toEqual([2 ,5 ,8 ]);
+    expect(converted[2]).toEqual([3 ,6 ,9 ]);
+    expect(converted[3]).toEqual([10,13,16]);
+    expect(converted[4]).toEqual([11,14,17]);
+    expect(converted[5]).toEqual([12,15,18]);
+    expect(converted[6]).toEqual([19,22,25]);
+    expect(converted[7]).toEqual([20,23,26]);
+    expect(converted[8]).toEqual([21,24,27]);
+  });
+  it("should match given example",()=>{
+    var converted = convert(...exampleInput);
+    expect(converted[0]).toEqual([101, 102, 103]);
+    expect(converted[1]).toEqual([301, 302, 303]);
+    expect(converted[2]).toEqual([501, 502, 503]);
+    expect(converted[3]).toEqual([201, 202, 203]);
+    expect(converted[4]).toEqual([401, 402, 403]);
+    expect(converted[5]).toEqual([601, 602, 603]);
+  });
+});
+describe("columnCounter",()=>{
+  var count =  require('../../lib/day3/columnCounter');
+  it("should count triangles from columns",()=>{
+    var result = count(...threeTriangles);
+    expect(result).toEqual(2);
+  });
 });
