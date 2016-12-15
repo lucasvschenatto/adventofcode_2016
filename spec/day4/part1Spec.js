@@ -1,9 +1,13 @@
-describe("roomValidator", function() {
-  var validator = require('../../lib/day4/roomValidator');
-  // it("should have three sides", ()=> {
-//     var triangle = makeTriangle(10,10,15);
-//     expect(triangle.sides).toEqual([10,10,15]);
-//   });
+describe("room", function() {
+  var makeRoom = require('../../lib/day4/makeRoom');
+  it("should be valid if has exactly five letters and corresponding checksum", ()=> {
+    var room = makeRoom("a-b-c-d-e-123[abcde]");
+    expect(room.isValid()).toBeTruthy();
+  });
+  it("should not be valid if checksum differs from letters", ()=> {
+    var room = makeRoom("a-b-c-d-e-123[vxwyz]");
+    expect(room.isValid()).toBeFalsy();
+  });
 //   it("should know when it is not a triangle", ()=>{
 //     var triangle = makeTriangle(5,10,25);
 //     expect(triangle.isTriangle()).toBeFalsy();
