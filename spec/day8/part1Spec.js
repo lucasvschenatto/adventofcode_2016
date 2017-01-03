@@ -68,8 +68,42 @@ describe("Screen",()=>{
       let s = new Screen();
       s.rect(1,1);
       s.rotateRow(0,1);
+      expect(s.getPix(0,1).value).toBeTruthy();
+    });
+    it("should move the last pixel to the first position when rotating one",()=>{
+      let s = new Screen();
+      s.rect(1,1);
+      s.rotateRow(0,1);
       expect(s.getPix(0,0).value).toBeFalsy();
-      expect(s.getPix(1,2).value).toBeTruthy();
+    });
+    it("should also move pixels in the middle",()=>{
+      let s = new Screen();
+      s.rect(25,1);
+      s.rotateRow(0,1);
+      expect(s.getPix(0,0).value ).toBeFalsy();
+      expect(s.getPix(0,1).value ).toBeTruthy();
+      expect(s.getPix(0,2).value ).toBeTruthy();
+      expect(s.getPix(0,3).value ).toBeTruthy();
+      expect(s.getPix(0,25).value).toBeTruthy();
+      expect(s.getPix(0,26).value).toBeFalsy();
+      expect(s.getPix(0,27).value).toBeFalsy();
+      expect(s.getPix(0,28).value).toBeFalsy();
+      expect(s.getPix(0,29).value).toBeFalsy();
+      expect(s.getPix(0,30).value).toBeFalsy();
+      expect(s.getPix(0,31).value).toBeFalsy();
+      expect(s.getPix(0,45).value).toBeFalsy();
+      expect(s.getPix(0,46).value).toBeFalsy();
+      expect(s.getPix(0,47).value).toBeFalsy();
+      expect(s.getPix(0,48).value).toBeFalsy();
+      expect(s.getPix(0,49).value).toBeFalsy();
+    });
+    it("should move pixels the given times",()=>{
+      let s = new Screen();
+      s.rect(1,1);
+      s.rotateRow(0,2);
+      expect(s.getPix(0,0).value).toBeFalsy();
+      expect(s.getPix(0,1).value).toBeFalsy();
+      expect(s.getPix(0,2).value).toBeTruthy();
     });
   });
 });
