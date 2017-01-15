@@ -171,3 +171,41 @@ describe("Screen",()=>{
     });
   });
 });
+describe("execute",()=>{
+  let execute = require("../../lib/day8/execute");
+  let Screen = require("../../lib/day8/Screen");
+  // it("should return the screen",()=>{
+  //   let given = new Screen();
+  //   let received = execute(given);
+  //   expect(received instanceof Screen).toBeTruthy("did not return a screen");
+  //   expect(received).toEqual(given);
+  // });
+  it("should execute the rect command",()=>{
+    let screen = new Screen();
+    spyOn(screen,'rect');
+    execute(screen,"rect 3x2");
+    expect(screen.rect).toHaveBeenCalledWith(3,2);
+  });
+  it("should execute the rotateColumn command",()=>{
+    let screen = new Screen();
+    spyOn(screen,'rotateColumn');
+    execute(screen,"rotate column x=1 by 3");
+    expect(screen.rotateColumn).toHaveBeenCalledWith(1,3);
+  });
+  it("should execute the rotateRow command",()=>{
+    let screen = new Screen();
+    spyOn(screen,'rotateRow');
+    execute(screen,"rotate row y=0 by 4");
+    expect(screen.rotateRow).toHaveBeenCalledWith(0,4);
+  });
+  it("should execute many commands",()=>{
+    let screen = new Screen();
+    spyOn(screen,'rect');
+    spyOn(screen,'rotateColumn');
+    spyOn(screen,'rotateRow');
+    execute(screen,["rect 3x2","rotate column x=1 by 1","rotate row y=0 by 4"]);
+    expect(screen.rect).toHaveBeenCalled();
+    expect(screen.rotateColumn).toHaveBeenCalled();
+    expect(screen.rotateRow).toHaveBeenCalled();
+  });
+});
